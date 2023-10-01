@@ -7,27 +7,23 @@ import java.net.DatagramSocket;
 import java.net.InetAddress; 
 import java.util.Scanner; 
 
-public class udpBaseClient_2 implements Runnable
+public class udpBaseClient_2 
 { 
 	public static void main(String args[]) throws IOException 
 	{ 
-		
-	} 
-        
-        public static void sendData(String data, String ipAddr) throws IOException{
-            //Scathrow new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.nner sc = new Scanner(System.in); 
+		Scanner sc = new Scanner(System.in); 
 
 		// Step 1:Create the socket object for 
 		// carrying the data. 
 		DatagramSocket ds = new DatagramSocket(); 
-                System.out.println("Sending to " + ipAddr);
-		InetAddress ip = InetAddress.getByName(ipAddr); 
+
+		InetAddress ip = InetAddress.getLocalHost(); 
 		byte buf[] = null; 
 
 		// loop while user not enters "bye" 
-		//while (true) 
+		while (true) 
 		{ 
-			String inp = data;//sc.nextLine(); 
+			String inp = sc.nextLine(); 
 
 			// convert the String input into the byte array. 
 			buf = inp.getBytes(); 
@@ -40,11 +36,10 @@ public class udpBaseClient_2 implements Runnable
 			// Step 3 : invoke the send call to actually send 
 			// the data. 
 			ds.send(DpSend); 
-		} 
-        }
 
-    @Override
-    public void run() {
-        
-    }
+			// break the loop if user enters "bye" 
+			if (inp.equals("bye")) 
+				break; 
+		} 
+	} 
 } 

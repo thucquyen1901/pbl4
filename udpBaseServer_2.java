@@ -6,18 +6,11 @@ import java.net.DatagramSocket;
 import java.net.InetAddress; 
 import java.net.SocketException; 
 
-public class udpBaseServer_2 implements Runnable
-{
-        static NewJDialog dia;
+public class udpBaseServer_2 
+{ 
 	public static void main(String[] args) throws IOException 
-	{  
-	} 
-        public static void init(NewJDialog d) {
-            dia = d;
-        }
-        
-        public static void receiveMessage() throws IOException {
-            // Step 1 : Create a socket to listen at port 1234 
+	{ 
+		// Step 1 : Create a socket to listen at port 1234 
 		DatagramSocket ds = new DatagramSocket(1234); 
 		byte[] receive = new byte[65535]; 
 
@@ -32,23 +25,18 @@ public class udpBaseServer_2 implements Runnable
 			ds.receive(DpReceive); 
 
 			System.out.println("Client:-" + data(receive)); 
-                        System.out.println("addr = " + DpReceive.getAddress());
-                        
-                        String addr = DpReceive.getAddress().toString().substring(1);
-                        NewJDialog.receive(data(receive).toString(), addr, dia);
-                        
 
 			// Exit the server if the client sends "bye" 
-//			if (data(receive).toString().equals("bye")) 
-//			{ 
-//				System.out.println("Client sent bye.....EXITING"); 
-//				break; 
-//			} 
+			if (data(receive).toString().equals("bye")) 
+			{ 
+				System.out.println("Client sent bye.....EXITING"); 
+				break; 
+			} 
 
 			// Clear the buffer after every message. 
 			receive = new byte[65535]; 
-		}
-        }
+		} 
+	} 
 
 	// A utility method to convert the byte array 
 	// data into a string representation. 
@@ -65,10 +53,4 @@ public class udpBaseServer_2 implements Runnable
 		} 
 		return ret; 
 	} 
-
-    @Override
-    public void run() {
-        try{receiveMessage();}
-        catch(Exception e){}
-    }
 } 
